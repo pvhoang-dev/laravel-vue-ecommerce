@@ -8,8 +8,10 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { ChevronDownIcon } from "@heroicons/vue/24/solid";
 import store from "../store";
 import router from "../router";
+import { computed } from "vue";
 
 const emit = defineEmits(["toggle-sidebar"]);
+const currentUser = computed(() => store.state.user.data);
 
 function logout() {
   store.dispatch("logout").then(() => {
@@ -32,7 +34,7 @@ function logout() {
           src="https://randomuser.me/api/portraits/men/1.jpg"
           class="rounded-full w-8 mr-2"
         />
-        <small>Messi</small>
+        <small>{{ currentUser.data.name }}</small>
         <ChevronDownIcon
           class="ml-1 h-5 w-5 text-indigo-600 hover:text-violet-100"
           aria-hidden="true"
