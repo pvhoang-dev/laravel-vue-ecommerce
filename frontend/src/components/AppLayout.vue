@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import SideBar from "../components/SideBar.vue";
 import NavBar from "../components/NavBar.vue";
+import store from "../store";
 
 const { title } = defineProps({
   title: String,
@@ -18,6 +19,7 @@ function updateSidebarState() {
 }
 
 onMounted(() => {
+  store.dispatch("getUser");
   updateSidebarState();
   window.addEventListener("resize", updateSidebarState);
 });
@@ -29,7 +31,7 @@ onUnmounted(() => {
 
 <template>
   <div class="min-h-full bg-gray-200 flex">
-    <Sidebar :class="{ '-ml-[200px]': !sidebarOpened }" />
+    <SideBar :class="{ '-ml-[200px]': !sidebarOpened }" />
     <div class="flex-1">
       <NavBar @toggle-sidebar="toggleSidebar"></NavBar>
       <main class="p-6">
