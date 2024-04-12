@@ -1,16 +1,27 @@
 <script setup>
+import { ref } from "vue";
+import SideBar from "../components/SideBar.vue";
+import TopHeader from "../components/TopHeader.vue";
+
 const { title } = defineProps({
   title: String,
 });
+
+const sidebarOpened = ref(true);
+
+function toggleSidebar() {
+  sidebarOpened.value = !sidebarOpened.value;
+}
 </script>
 
 <template>
-  <div
-    class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
-  >
-    <div class="max-w-md w-full space-y-8">
-      <div>Part of the layout</div>
-      <router-view></router-view>
+  <div class="min-h-full bg-gray-200 flex">
+    <Sidebar :class="{ '-ml-[200px]': !sidebarOpened }" />
+    <div class="flex-1">
+      <TopHeader @toggle-sidebar="toggleSidebar"></TopHeader>
+      <main class="p-6">
+        <router-view></router-view>
+      </main>
     </div>
   </div>
 </template>
