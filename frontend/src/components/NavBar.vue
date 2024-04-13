@@ -34,7 +34,7 @@ function logout() {
           src="https://randomuser.me/api/portraits/men/1.jpg"
           class="rounded-full w-8 mr-2"
         />
-        <small>{{ currentUser.data.name }}</small>
+        <small>{{ currentUser.name }}</small>
         <ChevronDownIcon
           class="ml-1 h-5 w-5 text-indigo-600 hover:text-violet-100"
           aria-hidden="true"

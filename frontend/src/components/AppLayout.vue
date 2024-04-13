@@ -32,7 +32,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div v-if="currentUser.data" class="min-h-full bg-gray-200 flex">
+  <div v-if="currentUser.name" class="min-h-full bg-gray-200 flex">
     <SideBar :class="{ '-ml-[200px]': !sidebarOpened }" />
     <div class="flex-1">
       <NavBar @toggle-sidebar="toggleSidebar"></NavBar>
