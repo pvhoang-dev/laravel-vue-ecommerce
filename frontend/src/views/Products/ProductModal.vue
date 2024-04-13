@@ -15,9 +15,8 @@ import Spinner from "../../components/core/Spinner.vue";
 const props = defineProps({
   modelValue: Boolean,
   product: {
-    required: false,
+    required: true,
     type: Object,
-    default: {},
   },
 });
 
@@ -29,9 +28,11 @@ const product = ref({
   price: props.product.price,
 });
 
+console.log(props.product);
+
 const loading = ref(false);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "close"]);
 
 const show = computed({
   get: () => props.modelValue,
@@ -50,6 +51,7 @@ onUpdated(() => {
 
 function closeModal() {
   show.value = false;
+  emit("close");
 }
 
 function onSubmit() {
@@ -171,6 +173,7 @@ function onSubmit() {
                     class="mb-2"
                     v-model="product.price"
                     label="Price"
+                    prepend="$"
                   />
                 </div>
                 <footer
@@ -185,7 +188,7 @@ function onSubmit() {
                   <button
                     type="button"
                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    @click="show = false"
+                    @click="closeModal"
                     ref="cancelButtonRef"
                   >
                     Cancel

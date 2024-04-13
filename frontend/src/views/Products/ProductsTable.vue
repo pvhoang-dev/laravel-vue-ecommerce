@@ -17,9 +17,10 @@ const search = ref("");
 const products = computed(() => store.state.products);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
-
 const product = ref({});
 const showProductModal = ref(false);
+
+const emit = defineEmits(["clickEdit"]);
 
 onMounted(() => {
   getProducts();
@@ -72,10 +73,7 @@ function deleteProduct(product) {
 }
 
 function editProduct(p) {
-  store.dispatch("getProduct", p.id).then(({ data }) => {
-    product.value = data;
-    showAddNewModal();
-  });
+  emit("clickEdit", p);
 }
 </script>
 
@@ -176,9 +174,7 @@ function editProduct(p) {
           >
             {{ product.title }}
           </td>
-          <td class="border-b p-2">
-            {{ product.price }}
-          </td>
+          <td class="border-b p-2">${{ product.price }}</td>
           <td class="border-b p-2">
             {{ product.updated_at }}
           </td>
