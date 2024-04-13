@@ -8,9 +8,9 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
-import CustomInput from "../components/core/CustomInput.vue";
-import store from "../store/index.js";
-import Spinner from "../components/core/Spinner.vue";
+import CustomInput from "../../components/core/CustomInput.vue";
+import store from "../../store/index.js";
+import Spinner from "../../components/core/Spinner.vue";
 
 const props = defineProps({
   modelValue: Boolean,
@@ -110,7 +110,7 @@ function onSubmit() {
             leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <DialogPanel
-              class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
+              class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-[700px] sm:w-full"
             >
               <Spinner
                 v-if="loading"
@@ -148,7 +148,7 @@ function onSubmit() {
                 </button>
               </header>
               <form @submit.prevent="onSubmit">
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="bg-white px-4 pt-5 pb-4">
                   <CustomInput
                     class="mb-2"
                     v-model="product.title"

@@ -1,6 +1,8 @@
 import axios from "axios";
 import store from "./store";
-import router from "./router";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const axiosClient = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL}/api`,
@@ -16,6 +18,7 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
+    debugger;
     if (error.response.status === 401) {
       sessionStorage.removeItem("TOKEN");
       router.push({ name: "login" });
