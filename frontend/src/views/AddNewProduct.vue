@@ -10,6 +10,7 @@ import {
 import { ExclamationTriangleIcon } from "@heroicons/vue/24/outline";
 import CustomInput from "../components/core/CustomInput.vue";
 import store from "../store/index.js";
+import Spinner from "../components/core/Spinner.vue";
 
 const product = ref({
   title: null,
@@ -17,6 +18,8 @@ const product = ref({
   description: null,
   price: null,
 });
+
+const loading = ref(false);
 
 const props = defineProps({
   modelValue: Boolean,
@@ -34,12 +37,21 @@ function closeModal() {
 }
 
 function onSubmit() {
-  store.dispatch("createProduct", product.value).then((response) => {
-    if (response.status === 201) {
-      // TODO show notification
-      store.dispatch("getProducts");
-    }
-  });
+  loading.value = true;
+  store
+    .dispatch("createProduct", product.value)
+    .then((response) => {
+      loading.value = false;
+      if (response.status === 201) {
+        // TODO show notification
+        store.dispatch("getProducts");
+        closeModal();
+      }
+    })
+    .catch((err) => {
+      loading.value = false;
+      debugger;
+    });
 }
 </script>
 
@@ -74,6 +86,10 @@ function onSubmit() {
             <DialogPanel
               class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
             >
+              <Spinner
+                v-if="loading"
+                class="absolute left-0 top-0 bg-white right-0 bottom-0 flex items-center justify-center"
+              />
               <header class="py-3 px-4 flex justify-between items-center">
                 <DialogTitle
                   as="h3"
@@ -109,6 +125,12 @@ function onSubmit() {
                     label="Product Title"
                   />
                   <CustomInput
+                    type="file"
+                    class="mb-2"
+                    label="Product Image"
+                    @change="(file) => (product.image = file)"
+                  />
+                  <CustomInput
                     type="textarea"
                     class="mb-2"
                     v-model="product.description"
@@ -119,11 +141,6 @@ function onSubmit() {
                     class="mb-2"
                     v-model="product.price"
                     label="Price"
-                  />
-                  <CustomInput
-                    class="mb-2"
-                    v-model="product.title"
-                    label="Product Title"
                   />
                 </div>
                 <footer
