@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onUpdated, ref } from "vue";
 import {
   Dialog,
   DialogPanel,
@@ -12,18 +12,24 @@ import CustomInput from "../components/core/CustomInput.vue";
 import store from "../store/index.js";
 import Spinner from "../components/core/Spinner.vue";
 
+const props = defineProps({
+  modelValue: Boolean,
+  product: {
+    required: false,
+    type: Object,
+    default: {},
+  },
+});
+
 const product = ref({
-  title: null,
-  image: null,
-  description: null,
-  price: null,
+  id: props.product.id,
+  title: props.product.title,
+  image: props.product.image,
+  description: props.product.description,
+  price: props.product.price,
 });
 
 const loading = ref(false);
-
-const props = defineProps({
-  modelValue: Boolean,
-});
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -32,26 +38,46 @@ const show = computed({
   set: (value) => emit("update:modelValue", value),
 });
 
+onUpdated(() => {
+  product.value = {
+    id: props.product.id,
+    title: props.product.title,
+    image: props.product.image,
+    description: props.product.description,
+    price: props.product.price,
+  };
+});
+
 function closeModal() {
   show.value = false;
 }
 
 function onSubmit() {
-  loading.value = true;
-  store
-    .dispatch("createProduct", product.value)
-    .then((response) => {
+  if (product.value.id) {
+    store.dispatch("updateProduct", product.value).then((response) => {
       loading.value = false;
-      if (response.status === 201) {
+      if (response.status === 200) {
         // TODO show notification
         store.dispatch("getProducts");
         closeModal();
       }
-    })
-    .catch((err) => {
-      loading.value = false;
-      debugger;
     });
+  } else {
+    store
+      .dispatch("createProduct", product.value)
+      .then((response) => {
+        loading.value = false;
+        if (response.status === 201) {
+          // TODO show notification
+          store.dispatch("getProducts");
+          closeModal();
+        }
+      })
+      .catch((err) => {
+        loading.value = false;
+        debugger;
+      });
+  }
 }
 </script>
 
@@ -95,7 +121,11 @@ function onSubmit() {
                   as="h3"
                   class="text-lg leading-6 font-medium text-gray-900"
                 >
-                  Create new Product
+                  {{
+                    product.id
+                      ? `Update product: "${props.product.title}"`
+                      : "Create new Product"
+                  }}
                 </DialogTitle>
                 <button
                   @click="closeModal()"

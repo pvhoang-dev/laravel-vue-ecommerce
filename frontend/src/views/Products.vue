@@ -4,7 +4,7 @@ import store from "../store";
 import Spinner from "../components/core/Spinner.vue";
 import { PRODUCTS_PER_PAGE } from "../constants";
 import TableHeaderCell from "../components/core/Table/TableHeaderCell.vue";
-import AddNewProduct from "./AddNewProduct.vue";
+import ProductModal from "./ProductModal.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import {
   EllipsisVerticalIcon,
@@ -17,6 +17,8 @@ const search = ref("");
 const products = computed(() => store.state.products);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
+
+const product = ref({});
 const showProductModal = ref(false);
 
 onMounted(() => {
@@ -66,6 +68,13 @@ function deleteProduct(product) {
   store.dispatch("deleteProduct", product.id).then((res) => {
     // TODO Show notification
     store.dispatch("getProducts");
+  });
+}
+
+function editProduct(p) {
+  store.dispatch("getProduct", p.id).then(({ data }) => {
+    product.value = data;
+    showAddNewModal();
   });
 }
 </script>
@@ -210,6 +219,7 @@ function deleteProduct(product) {
                           active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                           'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                         ]"
+                        @click="editProduct(product)"
                       >
                         <PencilSquareIcon
                           :active="active"
@@ -277,5 +287,5 @@ function deleteProduct(product) {
       </nav>
     </div>
   </div>
-  <AddNewProduct v-model="showProductModal" />
+  <ProductModal v-model="showProductModal" :product="product" />
 </template>
