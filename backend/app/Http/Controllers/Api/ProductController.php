@@ -25,7 +25,6 @@ class ProductController extends Controller
         $perPage = request('per_page', 10);
         $search = request('search', '');
         $sortField = request('sort_field', 'updated_at');
-
         $sortDirection = request('sort_direction', 'desc');
 
         $query = Product::query()
@@ -39,7 +38,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ProductRequest $request)
@@ -66,7 +65,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
@@ -77,8 +76,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Product      $product
      * @return \Illuminate\Http\Response
      */
     public function update(ProductRequest $request, Product $product)
@@ -109,7 +108,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Product  $product
+     * @param \App\Models\Product $product
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)

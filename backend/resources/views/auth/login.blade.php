@@ -9,22 +9,17 @@
                 create new account
             </a>
         </p>
-
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
-
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
         @csrf
 
         <div class="mb-4">
-            <input id="loginEmail" type="email" name="email" placeholder="Your email address"
-                class="border-gray-300 focus:border-purple-500 focus:outline-none focus:ring-purple-500 rounded-md w-full" />
+            <x-input id="loginEmail" type="email" name="email" placeholder="Your email address" />
         </div>
         <div class="mb-4">
-            <input id="loginPassword" type="password" name="password" placeholder="Your password"
-                class="border-gray-300 focus:border-purple-500 focus:outline-none focus:ring-purple-500 rounded-md w-full" />
+            <x-input id="loginPassword" type="password" name="password" placeholder="Your password" />
         </div>
         <div class="flex justify-between items-center mb-5">
             <div class="flex items-center">

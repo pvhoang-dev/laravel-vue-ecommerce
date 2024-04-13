@@ -4,27 +4,27 @@
 
 @layer base {
   .py-navbar-item {
-    @apply py-6;
+    @apply py-6
   }
 
   .pt-navbar-item {
-    @apply pt-6;
+    @apply pt-6
   }
 
   .pb-navbar-item {
-    @apply pb-6;
+    @apply pb-6
   }
 
   .px-navbar-item {
-    @apply px-3;
+    @apply px-3
   }
 
   .pl-navbar-item {
-    @apply pl-3;
+    @apply pl-3
   }
 
   .pr-navbar-item {
-    @apply pr-3;
+    @apply pr-3
   }
 }
 

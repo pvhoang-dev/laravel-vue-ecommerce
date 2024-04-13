@@ -1,9 +1,9 @@
-import "./bootstrap";
+import './bootstrap';
 
-import Alpine from "alpinejs";
-import collapse from "@alpinejs/collapse";
+import Alpine from 'alpinejs';
+import collapse from '@alpinejs/collapse'
 
-Alpine.plugin(collapse);
+Alpine.plugin(collapse)
 
 window.Alpine = Alpine;
 
@@ -96,10 +96,9 @@ document.addEventListener("alpine:init", () => {
       },
       addToCart(id, quantity = 1) {
         this.$store.header.cartItemsObject[id] = this.$store.header
-          .cartItemsObject[id] || { ...product, quantity: 0 };
+          .cartItemsObject[id] || {...product, quantity: 0};
         this.$store.header.cartItemsObject[id].quantity =
-          parseInt(this.$store.header.cartItemsObject[id].quantity) +
-          parseInt(quantity);
+          parseInt(this.$store.header.cartItemsObject[id].quantity) + parseInt(quantity);
         this.$dispatch("notify", {
           message: "The item was added into the cart",
         });
@@ -120,8 +119,7 @@ document.addEventListener("alpine:init", () => {
   });
 
   Alpine.data("signupForm", () => ({
-    defaultClasses:
-      "border-gray-300 focus:ring-purple-500 focus:border-purple-500",
+    defaultClasses: "border-gray-300 focus:ring-purple-500 focus:border-purple-500",
     errorClasses:
       "border-red-600 focus:border-red-600 ring-1 ring-red-600 focus:ring-red-600",
     successClasses:
@@ -182,8 +180,9 @@ document.addEventListener("alpine:init", () => {
       if (!this.form.password_repeat) {
         this.errors.password_repeat = "This field is required";
       }
-    },
+    }
   }));
 });
+
 
 Alpine.start();
