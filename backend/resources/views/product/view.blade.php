@@ -1,5 +1,11 @@
 <x-app-layout>
-    <div class="container mx-auto">
+    <div x-data="productItem({{ json_encode([
+        'id' => $product->id,
+        'slug' => $product->slug,
+        'image' => $product->image,
+        'title' => $product->title,
+        'price' => $product->price,
+    ]) }})" class="container mx-auto">
         <div class="grid gap-6 grid-cols-1 lg:grid-cols-5">
             <div class="lg:col-span-3">
                 <div x-data="{
@@ -62,10 +68,10 @@
                     <label for="quantity" class="block font-bold mr-4">
                         Quantity
                     </label>
-                    <input type="number" name="quantity" x-ref="quantityEl" value="1"
+                    <input type="number" name="quantity" x-ref="quantityEl" value="1" min="1"
                         class="w-32 focus:border-purple-500 focus:outline-none rounded" />
                 </div>
-                <button @click="addToCart(id, $refs.quantityEl.value)"
+                <button @click="addToCart($refs.quantityEl.value)"
                     class="btn-primary py-4 text-lg flex justify-center min-w-0 w-full mb-6">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
