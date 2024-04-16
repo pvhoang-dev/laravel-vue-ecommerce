@@ -1,4 +1,13 @@
+<?php
+/** @var \Illuminate\Database\Eloquent\Collection $products */
+?>
+
 <x-app-layout>
+    <?php if ($products->count() === 0): ?>
+    <div class="text-center text-gray-600 py-16 text-xl">
+        There are no products published
+    </div>
+    <?php else: ?>
     <div class="grid gap-8 grig-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-5">
         @foreach ($products as $product)
             <!-- Product Item -->
@@ -33,4 +42,5 @@
         @endforeach
     </div>
     {{ $products->links() }}
+    <?php endif; ?>
 </x-app-layout>
