@@ -52,12 +52,16 @@ document.addEventListener("alpine:init", async () => {
     return {
       product,
       addToCart(quantity = 1) {
-        post(`/cart/add/${product.slug}`, { quantity }).then((result) => {
-          this.$dispatch("cart-change", { count: result.count });
-          this.$dispatch("notify", {
-            message: "The item was added into the cart",
+        post(`/cart/add/${product.slug}`, { quantity })
+          .then((result) => {
+            this.$dispatch("cart-change", { count: result.count });
+            this.$dispatch("notify", {
+              message: "The item was added into the cart",
+            });
+          })
+          .catch((response) => {
+            console.log(response);
           });
-        });
       },
       removeItemFromCart() {
         post(`/cart/remove/${product.slug}`).then((result) => {
