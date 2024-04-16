@@ -9,5 +9,5 @@ class CartItem extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = ['user_id', 'quantity', 'product_id',];
 }
