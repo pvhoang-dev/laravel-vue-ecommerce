@@ -14,7 +14,7 @@ class Cart
         if ($user) {
             return CartItem::where('user_id', $user->id)->sum('quantity');
         } else {
-            $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
+            $cartItems = self::getCookieCartItems();
 
             return array_reduce(
                 $cartItems,
@@ -30,11 +30,6 @@ class Cart
         $user = $request->user();
 
         if ($user) {
-            // $cartItems = [];
-            // foreach (CartItem::where('user_id', $user->id)->get() as $item) {
-            //     $cartItems[] = ['product_id' => $item->product_id, 'quantity' => $item->quantity];
-            // }
-            // return $cartItems;
             return CartItem::where('user_id', $user->id)->get()->map(
                 fn ($item) => ['product_id' => $item->product_id, 'quantity' => $item->quantity]
             );
