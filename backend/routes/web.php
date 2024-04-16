@@ -28,4 +28,8 @@ Route::middleware(['guestOrVerified'])->group(function () {
     });
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'view'])->name('profile');
+});
+
 require __DIR__ . '/auth.php';

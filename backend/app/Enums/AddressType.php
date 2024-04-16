@@ -2,8 +2,8 @@
 
 namespace App\Enums;
 
-enum AddressType
+enum AddressType: string
 {
-    case Shipping;
-    case Billing;
+    case Shipping = 'shipping';
+    case Billing = 'billing';
 }
