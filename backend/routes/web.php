@@ -18,11 +18,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 Route::get('/product/{product:slug}', [ProductController::class, 'view'])->name('product.view');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add/{product:slug}', [CartController::class, 'add'])->name('cart.add');
-Route::get('/cart/get-total-count', [CartController::class, 'getTotalCount'])->name('cart.total-count');
-Route::post('/cart/remove/{product:slug}', [CartController::class, 'remove'])->name('cart.remove');
-Route::post('/cart/update-quantity/{product:slug}', [CartController::class, 'updateQuantity'])->name('cart.update-quantity');
+
+Route::prefix('/cart')->name('cart.')->group(function () {
+    Route::get('/', [CartController::class, 'index'])->name('index');
+    Route::post('/add/{product:slug}', [CartController::class, 'add'])->name('add');
+    Route::post('/remove/{product:slug}', [CartController::class, 'remove'])->name('remove');
+    Route::post('/update-quantity/{product:slug}', [CartController::class, 'updateQuantity'])->name('update-quantity');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
