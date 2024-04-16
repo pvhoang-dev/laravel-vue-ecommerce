@@ -12,7 +12,7 @@ class Cart
         $request = \request();
         $user = $request->user();
         if ($user) {
-            return CartItem::where('user_id', $user->id)->count();
+            return CartItem::where('user_id', $user->id)->sum('quantity');
         } else {
             $cartItems = json_decode($request->cookie('cart_items', '[]'), true);
 
@@ -28,16 +28,16 @@ class Cart
     {
         $request = \request();
         $user = $request->user();
+
         if ($user) {
-            $cartItems = [];
-            foreach (CartItem::where('user_id', $user->id)->get() as $item) {
-                $cartItems[] = ['product_id' => $item->product_id, 'quantity' => $item->quantity];
-            }
-            return $cartItems;
-            // return Arr::map(
-            //     CartItem::where('user_id', $user->id)->get(),
-            //     fn ($item) => ['product_id' => $item->product_id, 'quantity' => $item->quantity]
-            // );
+            // $cartItems = [];
+            // foreach (CartItem::where('user_id', $user->id)->get() as $item) {
+            //     $cartItems[] = ['product_id' => $item->product_id, 'quantity' => $item->quantity];
+            // }
+            // return $cartItems;
+            return CartItem::where('user_id', $user->id)->get()->map(
+                fn ($item) => ['product_id' => $item->product_id, 'quantity' => $item->quantity]
+            );
         } else {
             return json_decode($request->cookie('cart_items', '[]'), true);
         }
