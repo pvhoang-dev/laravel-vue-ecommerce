@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
   modelValue: [String, Number, File],
@@ -18,6 +18,12 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  selectOptions: Array,
+});
+
+const id = computed(() => {
+  if (props.id) return props.id;
+  return `id-${Math.floor(1000000 + Math.random() * 1000000)}`;
 });
 
 const inputClasses = computed(() => {
@@ -47,7 +53,20 @@ const emit = defineEmits(["update:modelValue", "change"]);
       >
         {{ prepend }}
       </span>
-      <template v-if="type === 'textarea'">
+      <template v-if="type === 'select'">
+        <select
+          :name="name"
+          :required="required"
+          :value="props.modelValue"
+          :class="inputClasses"
+          @change="emit('update:modelValue', $event.target.value)"
+        >
+          <option v-for="option of selectOptions" :value="option.key">
+            {{ option.text }}
+          </option>
+        </select>
+      </template>
+      <template v-else-if="type === 'textarea'">
         <textarea
           :name="name"
           :required="required"
@@ -67,6 +86,20 @@ const emit = defineEmits(["update:modelValue", "change"]);
           :class="inputClasses"
           :placeholder="label"
         />
+      </template>
+      <template v-else-if="type === 'checkbox'">
+        <input
+          :id="id"
+          :name="name"
+          :type="type"
+          :checked="props.modelValue"
+          :required="required"
+          @change="emit('update:modelValue', $event.target.checked)"
+          class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+        />
+        <label :for="id" class="ml-2 block text-sm text-gray-900">
+          {{ label }}
+        </label>
       </template>
       <template v-else>
         <input

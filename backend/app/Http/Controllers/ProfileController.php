@@ -31,46 +31,46 @@ class ProfileController extends Controller
 
     public function store(ProfileRequest $request)
     {
-        $user = $request->user();
-        $customer = $user->customer;
-
-        $customer->update($request->validated());
-
-        $customer->shippingAddress->updateOrCreate(['customer_id' => $user->id, 'type' => AddressType::Shipping], $request->input('shipping'));
-        $customer->billingAddress->updateOrCreate(['customer_id' => $user->id, 'type' => AddressType::Billing], $request->input('billing'));
-
-        $request->session()->flash('flash_message', 'Profile was successfully updated.');
-
-        return redirect()->route('profile');
-
-        // $customerData = $request->validated();
-        // $shippingData = $customerData['shipping'];
-        // $billingData = $customerData['billing'];
-        // /** @var \App\Models\User $user */
         // $user = $request->user();
-        // /** @var \App\Models\Customer $customer */
         // $customer = $user->customer;
 
-        // $customer->update($customerData);
+        // $customer->update($request->validated());
 
-        // if ($customer->shippingAddress) {
-        //     $customer->shippingAddress->update($shippingData);
-        // } else {
-        //     $shippingData['customer_id'] = $customer->user_id;
-        //     $shippingData['type'] = AddressType::Shipping->value;
-        //     CustomerAddress::create($shippingData);
-        // }
-        // if ($customer->billingAddress) {
-        //     $customer->billingAddress->update($billingData);
-        // } else {
-        //     $billingData['customer_id'] = $customer->user_id;
-        //     $billingData['type'] = AddressType::Billing->value;
-        //     CustomerAddress::create($billingData);
-        // }
+        // $customer->shippingAddress->updateOrCreate(['customer_id' => $user->id, 'type' => AddressType::Shipping], $request->input('shipping'));
+        // $customer->billingAddress->updateOrCreate(['customer_id' => $user->id, 'type' => AddressType::Billing], $request->input('billing'));
 
         // $request->session()->flash('flash_message', 'Profile was successfully updated.');
 
         // return redirect()->route('profile');
+
+        $customerData = $request->validated();
+        $shippingData = $customerData['shipping'];
+        $billingData = $customerData['billing'];
+        /** @var \App\Models\User $user */
+        $user = $request->user();
+        /** @var \App\Models\Customer $customer */
+        $customer = $user->customer;
+
+        $customer->update($customerData);
+
+        if ($customer->shippingAddress) {
+            $customer->shippingAddress->update($shippingData);
+        } else {
+            $shippingData['customer_id'] = $customer->user_id;
+            $shippingData['type'] = AddressType::Shipping->value;
+            CustomerAddress::create($shippingData);
+        }
+        if ($customer->billingAddress) {
+            $customer->billingAddress->update($billingData);
+        } else {
+            $billingData['customer_id'] = $customer->user_id;
+            $billingData['type'] = AddressType::Billing->value;
+            CustomerAddress::create($billingData);
+        }
+
+        $request->session()->flash('flash_message', 'Profile was successfully updated.');
+
+        return redirect()->route('profile');
     }
 
     public function passwordUpdate(PasswordUpdateRequest $request)
