@@ -6,6 +6,7 @@ import { PRODUCTS_PER_PAGE } from "../../constants";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { Bars3Icon, PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
+import OrderStatus from "./OrderStatus.vue";
 
 const perPage = ref(PRODUCTS_PER_PAGE);
 const search = ref("");
@@ -160,7 +161,7 @@ function showOrder(p) {
             {{ order.customer.first_name }} {{ order.customer.last_name }}
           </td>
           <td class="border-b p-2">
-            <span>{{ order.status }}</span>
+            <OrderStatus :order="order" />
           </td>
           <td class="border-b p-2">${{ order.total_price }}</td>
           <td
