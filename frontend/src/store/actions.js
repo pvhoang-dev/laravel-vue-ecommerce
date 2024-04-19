@@ -147,6 +147,10 @@ export function createUser({ commit }, user) {
   return axiosClient.post("/users", user);
 }
 
+export function updateUser({ commit }, user) {
+  return axiosClient.put(`/users/${user.id}`, user);
+}
+
 export function deleteUser({ commit }, id) {
   return axiosClient.delete(`/users/${id}`);
 }
