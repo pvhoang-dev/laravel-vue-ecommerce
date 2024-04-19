@@ -23,4 +23,9 @@ export default {
     limit: null,
     total: null,
   },
+  toast: {
+    show: false,
+    message: "",
+    delay: 1000,
+  },
 };
