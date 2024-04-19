@@ -57,7 +57,7 @@
                             </a>
                         </li>
                         <li class="hover:bg-slate-900">
-                            <a href="/src/orders.html" class="flex items-center px-3 py-2 hover:bg-slate-900">
+                            <a href="{{ route('order.index') }}" class="flex items-center px-3 py-2 hover:bg-slate-900">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -154,7 +154,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/src/orders.html" class="flex px-3 py-2 hover:bg-slate-900">
+                            <a href="{{ route('order.index') }}" class="flex px-3 py-2 hover:bg-slate-900">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
