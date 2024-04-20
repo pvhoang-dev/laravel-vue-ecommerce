@@ -12,6 +12,7 @@ use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -58,33 +59,43 @@ class CheckoutController extends Controller
             'cancel_url' => route('checkout.failure', [], true),
         ]);
 
-        // Create Order
-        $orderData = [
-            'total_price' => $totalPrice,
-            'status' => OrderStatus::Unpaid,
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
-        ];
-        $order = Order::create($orderData);
 
-        // Create Order Items
-        foreach ($orderItems as $orderItem) {
-            $orderItem['order_id'] = $order->id;
-            OrderItem::create($orderItem);
+        DB::beginTransaction();
+        try {
+
+            // Create Order
+            $orderData = [
+                'total_price' => $totalPrice,
+                'status' => OrderStatus::Unpaid,
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+            ];
+            $order = Order::create($orderData);
+
+            // Create Order Items
+            foreach ($orderItems as $orderItem) {
+                $orderItem['order_id'] = $order->id;
+                OrderItem::create($orderItem);
+            }
+
+            // Create Payment
+            $paymentData = [
+                'order_id' => $order->id,
+                'amount' => $totalPrice,
+                'status' => PaymentStatus::Pending,
+                'type' => 'cc',
+                'created_by' => $user->id,
+                'updated_by' => $user->id,
+                'session_id' => $session->id
+            ];
+
+            Payment::create($paymentData);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
 
-        // Create Payment
-        $paymentData = [
-            'order_id' => $order->id,
-            'amount' => $totalPrice,
-            'status' => PaymentStatus::Pending,
-            'type' => 'cc',
-            'created_by' => $user->id,
-            'updated_by' => $user->id,
-            'session_id' => $session->id
-        ];
-
-        Payment::create($paymentData);
+        DB::commit();
 
         CartItem::where(['user_id' => $user->id])->delete();
 
