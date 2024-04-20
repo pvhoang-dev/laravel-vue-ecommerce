@@ -5,6 +5,7 @@
         'image' => $product->image,
         'title' => $product->title,
         'price' => $product->price,
+        'quantity' => $product->quantity,
         'addToCartUrl' => route('cart.add', $product),
     ]) }})" class="container mx-auto">
         <div class="grid gap-6 grid-cols-1 lg:grid-cols-5">
@@ -65,6 +66,11 @@
                     {{ $product->title }}
                 </h1>
                 <div class="text-xl font-bold mb-6">${{ $product->price }}</div>
+                @if ($product->quantity === 0)
+                    <div class="bg-red-400 text-white py-2 px-3 rounded mb-3">
+                        The product is out of stock
+                    </div>
+                @endif
                 <div class="flex items-center justify-between mb-5">
                     <label for="quantity" class="block font-bold mr-4">
                         Quantity
@@ -72,8 +78,9 @@
                     <input type="number" name="quantity" x-ref="quantityEl" value="1" min="1"
                         class="w-32 focus:border-purple-500 focus:outline-none rounded" />
                 </div>
-                <button @click="addToCart($refs.quantityEl.value)"
-                    class="btn-primary py-4 text-lg flex justify-center min-w-0 w-full mb-6">
+                <button :disabled="product.quantity === 0" @click="addToCart($refs.quantityEl.value)"
+                    class="btn-primary py-4 text-lg flex justify-center min-w-0 w-full mb-6"
+                    :class="product.quantity === 0 ? 'cursor-not-allowed' : 'cursor-pointer'">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -83,7 +90,7 @@
                 </button>
                 <div class="mb-6" x-data="{ expanded: false }">
                     <div x-show="expanded" x-collapse.min.120px class="text-gray-500 wysiwyg-content">
-                        {{ $product->description }}
+                        {!! $product->description !!}
                     </div>
                     <p class="text-right">
                         <a @click="expanded = !expanded" href="javascript:void(0)"
