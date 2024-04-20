@@ -29,8 +29,6 @@ const product = ref({
   published: props.product.published,
 });
 
-console.log(props.product);
-
 const loading = ref(false);
 
 const emit = defineEmits(["update:modelValue", "close"]);
@@ -79,7 +77,7 @@ function onSubmit() {
       })
       .catch((err) => {
         loading.value = false;
-        debugger;
+        // debugger;
       });
   }
 }

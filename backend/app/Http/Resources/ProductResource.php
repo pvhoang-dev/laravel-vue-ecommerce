@@ -18,12 +18,14 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $images = $this->images;
         return [
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
-            'image_url' => $this->image ?: null,
+            'image_url' => $images->count() > 0 ? $images->get(0)->url : asset('assets/images/default.jpg'),
+            'images' => $this->images,
             'price' => $this->price,
             'quantity' => $this->quantity,
             'published' => (bool)$this->published,
