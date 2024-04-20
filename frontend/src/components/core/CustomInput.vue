@@ -19,6 +19,10 @@ const props = defineProps({
     default: "",
   },
   selectOptions: Array,
+  errors: {
+    type: Array,
+    required: false,
+  },
 });
 
 const id = computed(() => {
@@ -30,6 +34,7 @@ const inputClasses = computed(() => {
   const cls = [
     `block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`,
   ];
+
   if (props.append && !props.prepend) {
     cls.push(`rounded-l-md`);
   } else if (props.prepend && !props.append) {
@@ -37,6 +42,11 @@ const inputClasses = computed(() => {
   } else if (!props.prepend && !props.append) {
     cls.push("rounded-md");
   }
+
+  if (props.errors && props.errors[0]) {
+    cls.push("border-red-600 focus:border-red-600");
+  }
+
   return cls.join(" ");
 });
 
@@ -125,5 +135,8 @@ function onChange(value) {
         {{ append }}
       </span>
     </div>
+    <small v-if="errors && errors[0]" class="text-red-600">
+      {{ errors[0] }}
+    </small>
   </div>
 </template>
