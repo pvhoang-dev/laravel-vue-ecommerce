@@ -99,6 +99,12 @@ function onSubmit(event, close = false) {
           prepend="$"
         />
         <CustomInput
+          type="number"
+          class="mb-2"
+          v-model="product.quantity"
+          label="Quantity"
+        />
+        <CustomInput
           type="checkbox"
           class="mb-2"
           v-model="product.published"
