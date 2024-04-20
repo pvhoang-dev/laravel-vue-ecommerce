@@ -65,7 +65,7 @@ function deleteCustomer(customer) {
     return;
   }
   store.dispatch("deleteCustomer", customer.id).then((res) => {
-    // TODO Show notification
+    store.commit("showToast", "Customer has been successfully deleted");
     store.dispatch("getCustomers");
   });
 }
