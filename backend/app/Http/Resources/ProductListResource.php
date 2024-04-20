@@ -20,7 +20,7 @@ class ProductListResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'image_url' => $images->count() > 0 ? $images->get(0)->url : asset('assets/images/default.jpg'),
+            'image_url' => $images->count() > 0 ? $images->get(0)->url : null,
             'price' => $this->price,
             'quantity' => $this->quantity,
             'updated_at' => (new \DateTime($this->updated_at))->format('Y-m-d H:i:s'),
