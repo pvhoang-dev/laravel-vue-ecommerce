@@ -12,6 +12,7 @@ use App\Models\CustomerAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 
 class ProfileController extends Controller
@@ -73,6 +74,7 @@ class ProfileController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::critical(__METHOD__ . ' method does not work. ' . $e->getMessage());
             throw $e;
         }
 
