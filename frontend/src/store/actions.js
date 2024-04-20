@@ -179,8 +179,7 @@ export function updateCustomer({ commit }, customer) {
 }
 
 export function deleteCustomer({ commit }, customer) {
-  console.log(customer);
-  return axiosClient.delete(`/customers/${customer}`);
+  return axiosClient.delete(`/customers/${customer.id}`);
 }
 
 export function updateProduct({ commit }, product) {
