@@ -10,7 +10,7 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline";
-import CustomerModal from "./CustomerModal.vue";
+
 const perPage = ref(CUSTOMERS_PER_PAGE);
 const search = ref("");
 const customers = computed(() => store.state.customers);
@@ -19,9 +19,11 @@ const sortDirection = ref("desc");
 const customer = ref({});
 const showCustomerModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
+
 onMounted(() => {
   getCustomers();
 });
+
 function getForPage(ev, link) {
   ev.preventDefault();
   if (!link.url || link.active) {
@@ -29,6 +31,7 @@ function getForPage(ev, link) {
   }
   getCustomers(link.url);
 }
+
 function getCustomers(url = null) {
   store.dispatch("getCustomers", {
     url,
@@ -38,6 +41,7 @@ function getCustomers(url = null) {
     sort_direction: sortDirection.value,
   });
 }
+
 function sortCustomers(field) {
   if (field === sortField.value) {
     if (sortDirection.value === "desc") {
@@ -51,9 +55,11 @@ function sortCustomers(field) {
   }
   getCustomers();
 }
+
 function showAddNewModal() {
   showCustomerModal.value = true;
 }
+
 function deleteCustomer(customer) {
   if (!confirm(`Are you sure you want to delete the customer?`)) {
     return;
@@ -62,9 +68,6 @@ function deleteCustomer(customer) {
     // TODO Show notification
     store.dispatch("getCustomers");
   });
-}
-function editCustomer(p) {
-  emit("clickEdit", p);
 }
 </script>
 
@@ -206,12 +209,15 @@ function editCustomer(p) {
                 >
                   <div class="px-1 py-1">
                     <MenuItem v-slot="{ active }">
-                      <button
+                      <router-link
+                        :to="{
+                          name: 'app.customers.view',
+                          params: { id: customer.id },
+                        }"
                         :class="[
                           active ? 'bg-indigo-600 text-white' : 'text-gray-900',
                           'group flex w-full items-center rounded-md px-2 py-2 text-sm',
                         ]"
-                        @click="editCustomer(customer)"
                       >
                         <PencilIcon
                           :active="active"
@@ -219,7 +225,7 @@ function editCustomer(p) {
                           aria-hidden="true"
                         />
                         Edit
-                      </button>
+                      </router-link>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
                       <button

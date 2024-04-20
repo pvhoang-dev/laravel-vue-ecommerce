@@ -126,11 +126,13 @@ Promise.all(requests)
 </script>
 
 <template>
-  <h1 class="text-4xl mb-3">Dashboard</h1>
+  <div class="mb-2">
+    <h1 class="text-3xl font-semibold">Dashboard</h1>
+  </div>
   <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-4">
     <!--    Active Customers-->
     <div
-      class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
+      class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
     >
       <label class="text-lg font-semibold block mb-2">Active Customers</label>
       <template v-if="!loading.customersCount">
@@ -141,7 +143,8 @@ Promise.all(requests)
     <!--/    Active Customers-->
     <!--    Active Products -->
     <div
-      class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
+      class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
+      style="animation-delay: 0.1s"
     >
       <label class="text-lg font-semibold block mb-2">Active Products</label>
       <template v-if="!loading.productsCount">
@@ -152,7 +155,8 @@ Promise.all(requests)
     <!--/    Active Products -->
     <!--    Paid Orders -->
     <div
-      class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
+      class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
+      style="animation-delay: 0.2s"
     >
       <label class="text-lg font-semibold block mb-2">Paid Orders</label>
       <template v-if="!loading.paidOrders">
@@ -163,7 +167,8 @@ Promise.all(requests)
     <!--/    Paid Orders -->
     <!--    Total Income -->
     <div
-      class="bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center"
+      class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center"
+      style="animation-delay: 0.3s"
     >
       <label class="text-lg font-semibold block mb-2">Total Income</label>
       <template v-if="!loading.totalIncome">
@@ -217,7 +222,7 @@ Promise.all(requests)
       <label class="text-lg font-semibold block mb-2">Latest Customers</label>
       <template v-if="!loading.latestCustomers">
         <router-link
-          to="/"
+          :to="{ name: 'app.customers.view', params: { id: c.id } }"
           v-for="c of latestCustomers"
           :key="c.id"
           class="mb-3 flex"
