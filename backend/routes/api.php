@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
-use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +42,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('orders/change-status/{order}/{status}', [OrderController::class, 'changeStatus']);
     Route::get('orders/{order}', [OrderController::class, 'view']);
 
-    // Dashboard Routes
+    // Dashboard
     Route::get('/dashboard/customers-count', [DashboardController::class, 'activeCustomers']);
     Route::get('/dashboard/products-count', [DashboardController::class, 'activeProducts']);
     Route::get('/dashboard/orders-count', [DashboardController::class, 'paidOrders']);
@@ -49,6 +50,10 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/dashboard/orders-by-country', [DashboardController::class, 'ordersByCountry']);
     Route::get('/dashboard/latest-customers', [DashboardController::class, 'latestCustomers']);
     Route::get('/dashboard/latest-orders', [DashboardController::class, 'latestOrders']);
+
+    // Report
+    Route::get('/report/orders', [ReportController::class, 'orders']);
+    Route::get('/report/customers', [ReportController::class, 'customers']);
 });
 
 Route::post('/login', [AuthController::class, 'login']);

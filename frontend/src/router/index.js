@@ -12,6 +12,9 @@ import Orders from "../views/Orders/Orders.vue";
 import OrderView from "../views/Orders/OrderView.vue";
 import NotFound from "../views/NotFound.vue";
 import store from "../store";
+import Report from "../views/Reports/Report.vue";
+import OrdersReport from "../views/Reports/OrdersReport.vue";
+import CustomersReport from "../views/Reports/CustomersReport.vue";
 
 const routes = [
   {
@@ -60,6 +63,26 @@ const routes = [
         path: "orders/:id",
         name: "app.orders.view",
         component: OrderView,
+      },
+      {
+        path: "/report",
+        name: "reports",
+        component: Report,
+        meta: {
+          requiresAuth: true,
+        },
+        children: [
+          {
+            path: "orders/:date?",
+            name: "reports.orders",
+            component: OrdersReport,
+          },
+          {
+            path: "customers/:date?",
+            name: "reports.customers",
+            component: CustomersReport,
+          },
+        ],
       },
     ],
   },

@@ -1,24 +1,30 @@
 <script>
 import { defineComponent, h } from "vue";
-import { Doughnut } from "vue-chartjs";
+import { Line } from "vue-chartjs";
 import {
   Chart as ChartJS,
   Title,
   Tooltip,
   Legend,
-  ArcElement,
+  LineElement,
   CategoryScale,
+  LinearScale,
 } from "chart.js";
-ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+  CategoryScale,
+  LinearScale
+);
 export default defineComponent({
-  name: "DoughnutChart",
-  components: {
-    Doughnut,
-  },
+  name: "LineChart",
+  components: { Line },
   props: {
     chartId: {
       type: String,
-      default: "doughnut-chart",
+      default: "line-chart",
     },
     width: {
       type: Number,
@@ -37,8 +43,8 @@ export default defineComponent({
       default: () => {},
     },
     plugins: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => {},
     },
     data: {
       type: Object,
@@ -46,12 +52,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const chartOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-    };
+    const chartOptions = { responsive: true };
     return () =>
-      h(Doughnut, {
+      h(Line, {
         chartData: props.data,
         chartOptions,
         chartId: props.chartId,
