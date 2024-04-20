@@ -26,6 +26,7 @@ const product = ref({
   image: props.product.image,
   description: props.product.description,
   price: props.product.price,
+  published: props.product.published,
 });
 
 console.log(props.product);
@@ -46,6 +47,7 @@ onUpdated(() => {
     image: props.product.image,
     description: props.product.description,
     price: props.product.price,
+    published: props.product.published,
   };
 });
 
@@ -174,6 +176,12 @@ function onSubmit() {
                     v-model="product.price"
                     label="Price"
                     prepend="$"
+                  />
+                  <CustomInput
+                    type="checkbox"
+                    class="mb-2"
+                    v-model="product.published"
+                    label="Published"
                   />
                 </div>
                 <footer
