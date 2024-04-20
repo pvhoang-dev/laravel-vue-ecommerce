@@ -12,7 +12,7 @@ const { text } = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col items-center" :class="class">
+  <div class="spinner flex flex-col items-center" :class="class">
     <svg
       class="animate-spin -ml-1 h-8 w-8 text-gray-700"
       xmlns="http://www.w3.org/2000/svg"
@@ -38,3 +38,9 @@ const { text } = defineProps({
     </div>
   </div>
 </template>
+
+<style scoped>
+.spinner {
+  min-height: 140px;
+}
+</style>

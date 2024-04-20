@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from "vue";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
+const editor = ClassicEditor;
 const props = defineProps({
   modelValue: [String, Number, File],
   label: String,
@@ -22,6 +24,12 @@ const props = defineProps({
   errors: {
     type: Array,
     required: false,
+  },
+  editorConfig: {
+    type: Object,
+    default: () => ({
+      // toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList'],
+    }),
   },
 });
 
@@ -91,6 +99,17 @@ function onChange(value) {
           :placeholder="label"
         ></textarea>
       </template>
+      <template v-else-if="type === 'richtext'">
+        <ckeditor
+          :name="name"
+          :required="required"
+          :editor="editor"
+          :model-value="props.modelValue"
+          @input="onChange"
+          :class="inputClasses"
+          :config="props.editorConfig"
+        ></ckeditor>
+      </template>
       <template v-else-if="type === 'file'">
         <input
           :type="type"
@@ -140,3 +159,12 @@ function onChange(value) {
     </small>
   </div>
 </template>
+
+<style scoped>
+/deep/ .ck.ck-editor {
+  width: 100%;
+}
+/deep/ .ck-content {
+  min-height: 200px;
+}
+</style>
