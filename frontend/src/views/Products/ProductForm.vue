@@ -13,6 +13,7 @@ const product = ref({
   title: null,
   images: [],
   deleted_images: [],
+  image_positions: {},
   description: "",
   price: null,
   quantity: null,
@@ -127,6 +128,7 @@ function onSubmit($event, close = false) {
             v-model="product.images"
             :images="product.images"
             v-model:deleted-images="product.deleted_images"
+            v-model:image-positions="product.image_positions"
           />
         </div>
       </div>
