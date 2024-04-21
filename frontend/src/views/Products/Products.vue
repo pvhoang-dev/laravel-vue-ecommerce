@@ -16,14 +16,9 @@ const products = computed(() => store.state.products);
 const productModel = ref({ ...DEFAULT_PRODUCT });
 const showProductModal = ref(false);
 
-function showAddNewModal() {
-  showProductModal.value = true;
-}
-
 function editProduct(p) {
   store.dispatch("getProduct", p.id).then(({ data }) => {
     productModel.value = data;
-    showAddNewModal();
   });
 }
 
@@ -42,7 +37,7 @@ function onModalClose() {
       Add new Product
     </router-link>
   </div>
-  <ProductsTable />
+  <ProductsTable @clickEdit="editProduct" />
   <ProductModal
     v-model="showProductModal"
     :product="productModel"

@@ -48,7 +48,7 @@ class ProductController extends Controller
         $data['created_by'] = $request->user()->id;
         $data['updated_by'] = $request->user()->id;
 
-        /** @var \Illuminate\Http\UploadedFile $image */
+        /** @var \Illuminate\Http\UploadedFile[] $images */
         $images = $data['images'] ?? [];
 
         $product = Product::create($data);
@@ -87,7 +87,10 @@ class ProductController extends Controller
 
         // Check if image was given and save on local file system
         $this->saveImages($images, $product);
-        $this->deleteImages($deletedImages, $product);
+
+        if (count($deletedImages) > 0) {
+            $this->deleteImages($deletedImages, $product);
+        }
 
         $product->update($data);
 
@@ -112,8 +115,9 @@ class ProductController extends Controller
         foreach ($images as $i => $image) {
             $path = 'images/' . Str::random();
             if (!Storage::exists($path)) {
-                Storage::makeDirectory($path);
+                Storage::makeDirectory($path, 0755, true);
             }
+
             if (!Storage::putFileAS('public/' . $path, $image, $image->getClientOriginalName())) {
                 throw new \Exception("Unable to save file \"{$image->getClientOriginalName()}\"");
             }
@@ -131,7 +135,7 @@ class ProductController extends Controller
         }
     }
 
-    public function deleteImages($imageIds, Product $product)
+    private function deleteImages($imageIds, Product $product)
     {
         $images = ProductImage::query()
             ->where('product_id', $product->id)
@@ -139,9 +143,11 @@ class ProductController extends Controller
             ->get();
 
         foreach ($images as $image) {
+            // If there is an old image, delete it
             if ($image->path) {
                 Storage::deleteDirectory('/public/' . dirname($image->path));
             }
+
             $image->delete();
         }
     }

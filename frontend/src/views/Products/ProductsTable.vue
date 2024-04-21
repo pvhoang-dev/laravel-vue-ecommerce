@@ -135,6 +135,14 @@ function deleteProduct(product) {
             Price
           </TableHeaderCell>
           <TableHeaderCell
+            field="quantity"
+            :sort-field="sortField"
+            :sort-direction="sortDirection"
+            @click="sortProducts('quantity')"
+          >
+            Quantity
+          </TableHeaderCell>
+          <TableHeaderCell
             field="updated_at"
             :sort-field="sortField"
             :sort-direction="sortDirection"
@@ -178,6 +186,9 @@ function deleteProduct(product) {
           </td>
           <td class="border-b p-2">
             {{ $filters.currencyUSD(product.price) }}
+          </td>
+          <td class="border-b p-2">
+            {{ product.quantity }}
           </td>
           <td class="border-b p-2">
             {{ product.updated_at }}

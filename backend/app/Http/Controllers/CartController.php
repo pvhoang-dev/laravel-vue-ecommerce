@@ -28,10 +28,8 @@ class CartController extends Controller
         $quantity = $request->post('quantity', 1);
         $user = $request->user();
 
-        $totalCartCount = 0;
         $totalQuantity = 0;
-        $cartItem = null;
-        // Validate quantity against product->quantity
+
         if ($user) {
             $cartItem = CartItem::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
             if ($cartItem) {
@@ -57,7 +55,7 @@ class CartController extends Controller
             return response([
                 'message' => match ($product->quantity) {
                     0 => 'The product is out of stock',
-                    1 => 'There is only 1 item left',
+                    1 => 'There is only one item left',
                     default => 'There are only ' . $product->quantity . ' items left',
                 }
             ], 422);
@@ -137,6 +135,17 @@ class CartController extends Controller
     {
         $quantity = (int)$request->post('quantity');
         $user = $request->user();
+
+        if ($product->quantity !== null && $product->quantity < $quantity) {
+            return response([
+                'message' => match ($product->quantity) {
+                    0 => 'The product is out of stock',
+                    1 => 'There is only one item left',
+                    default => 'There are only ' . $product->quantity . ' items left'
+                }
+            ], 422);
+        }
+
         if ($user) {
             CartItem::where(['user_id' => $request->user()->id, 'product_id' => $product->id])->update(['quantity' => $quantity]);
 

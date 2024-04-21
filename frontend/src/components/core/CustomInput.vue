@@ -27,9 +27,7 @@ const props = defineProps({
   },
   editorConfig: {
     type: Object,
-    default: () => ({
-      // toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList'],
-    }),
+    default: () => ({}),
   },
 });
 
@@ -69,7 +67,7 @@ function onChange(value) {
 <template>
   <div>
     <label class="sr-only">{{ label }}</label>
-    <div class="mt-1 flex rounded-md">
+    <div class="mt-1 flex rounded-md shadow-sm">
       <span
         v-if="prepend"
         class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"
@@ -101,13 +99,12 @@ function onChange(value) {
       </template>
       <template v-else-if="type === 'richtext'">
         <ckeditor
-          :name="name"
-          :required="required"
           :editor="editor"
+          :required="required"
           :model-value="props.modelValue"
           @input="onChange"
           :class="inputClasses"
-          :config="props.editorConfig"
+          :config="editorConfig"
         ></ckeditor>
       </template>
       <template v-else-if="type === 'file'">
@@ -161,7 +158,7 @@ function onChange(value) {
 </template>
 
 <style scoped>
-/deep/ .ck.ck-editor {
+/deep/ .ck-editor {
   width: 100%;
 }
 /deep/ .ck-content {
