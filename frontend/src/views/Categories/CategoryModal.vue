@@ -13,6 +13,7 @@ import store from "../../store/index.js";
 import Spinner from "../../components/core/Spinner.vue";
 
 const loading = ref(false);
+const errors = ref({});
 const props = defineProps({
   modelValue: Boolean,
   category: {
@@ -62,20 +63,27 @@ onUpdated(() => {
 function closeModal() {
   show.value = false;
   emit("close");
+  errors.value = {};
 }
 
 function onSubmit() {
   loading.value = true;
   category.value.active = !!category.value.active;
   if (category.value.id) {
-    store.dispatch("updateCategory", category.value).then((response) => {
-      loading.value = false;
-      if (response.status === 200) {
-        store.commit("showToast", "Category was successfully updated");
-        store.dispatch("getCategories");
-        closeModal();
-      }
-    });
+    store
+      .dispatch("updateCategory", category.value)
+      .then((response) => {
+        loading.value = false;
+        if (response.status === 200) {
+          store.commit("showToast", "Category was successfully updated");
+          store.dispatch("getCategories");
+          closeModal();
+        }
+      })
+      .catch((err) => {
+        loading.value = false;
+        errors.value = err.response.data.errors;
+      });
   } else {
     store
       .dispatch("createCategory", category.value)
@@ -89,7 +97,7 @@ function onSubmit() {
       })
       .catch((err) => {
         loading.value = false;
-        debugger;
+        errors.value = err.response.data.errors;
       });
   }
 }
@@ -167,6 +175,7 @@ function onSubmit() {
                     class="mb-2"
                     v-model="category.name"
                     label="Name"
+                    :errors="errors['name']"
                   />
                   <CustomInput
                     type="select"
@@ -174,12 +183,14 @@ function onSubmit() {
                     class="mb-2"
                     v-model="category.parent_id"
                     label="Parent"
+                    :errors="errors['parent_id']"
                   />
                   <CustomInput
                     type="checkbox"
                     class="mb-2"
                     v-model="category.active"
                     label="Active"
+                    :errors="errors['active']"
                   />
                 </div>
                 <footer
