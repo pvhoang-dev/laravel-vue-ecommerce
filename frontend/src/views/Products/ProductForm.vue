@@ -22,9 +22,10 @@ const product = ref({
   description: "",
   price: null,
   quantity: null,
-  published: null,
+  published: false,
   categories: [],
 });
+const errors = ref({});
 const loading = ref(false);
 const options = ref([]);
 
@@ -46,20 +47,27 @@ onMounted(() => {
 
 function onSubmit($event, close = false) {
   loading.value = true;
+  errors.value = {};
   product.value.quantity = product.value.quantity || null;
   if (product.value.id) {
-    store.dispatch("updateProduct", product.value).then((response) => {
-      product.value = response.data;
-      loading.value = false;
-      if (response.status === 200) {
+    store
+      .dispatch("updateProduct", product.value)
+      .then((response) => {
         product.value = response.data;
-        store.commit("showToast", "Product was successfully updated");
-        store.dispatch("getProducts");
-        if (close) {
-          router.push({ name: "app.products" });
+        loading.value = false;
+        if (response.status === 200) {
+          product.value = response.data;
+          store.commit("showToast", "Product was successfully updated");
+          store.dispatch("getProducts");
+          if (close) {
+            router.push({ name: "app.products" });
+          }
         }
-      }
-    });
+      })
+      .catch((err) => {
+        loading.value = false;
+        errors.value = err.response.data.errors;
+      });
   } else {
     store
       .dispatch("createProduct", product.value)
@@ -82,6 +90,7 @@ function onSubmit($event, close = false) {
       })
       .catch((err) => {
         loading.value = false;
+        errors.value = err.response.data.errors;
       });
   }
 }
@@ -107,12 +116,14 @@ function onSubmit($event, close = false) {
             class="mb-2"
             v-model="product.title"
             label="Product Title"
+            :errors="errors['title']"
           />
           <CustomInput
             type="richtext"
             class="mb-2"
             v-model="product.description"
             label="Description"
+            :errors="errors['description']"
           />
           <CustomInput
             type="number"
@@ -120,23 +131,27 @@ function onSubmit($event, close = false) {
             v-model="product.price"
             label="Price"
             prepend="$"
+            :errors="errors['price']"
           />
           <CustomInput
             type="number"
             class="mb-2"
             v-model="product.quantity"
             label="Quantity"
+            :errors="errors['quantity']"
           />
           <CustomInput
             type="checkbox"
             class="mb-2"
             v-model="product.published"
             label="Published"
+            :errors="errors['published']"
           />
           <treeselect
             v-model="product.categories"
             :multiple="true"
             :options="options"
+            :errors="errors['categories']"
           />
         </div>
         <div class="col-span-1 px-4 pt-5 pb-4">
