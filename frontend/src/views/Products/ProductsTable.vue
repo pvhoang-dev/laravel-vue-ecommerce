@@ -4,7 +4,6 @@ import store from "../../store";
 import Spinner from "../../components/core/Spinner.vue";
 import { PRODUCTS_PER_PAGE } from "../../constants";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
-import ProductModal from "./ProductModal.vue";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import {
   EllipsisVerticalIcon,
@@ -18,9 +17,6 @@ const products = computed(() => store.state.products);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
 const product = ref({});
-const showProductModal = ref(false);
-
-const emit = defineEmits(["clickEdit"]);
 
 onMounted(() => {
   getProducts();
@@ -56,10 +52,6 @@ function sortProducts(field) {
     sortDirection.value = "asc";
   }
   getProducts();
-}
-
-function showAddNewModal() {
-  showProductModal.value = true;
 }
 
 function deleteProduct(product) {
