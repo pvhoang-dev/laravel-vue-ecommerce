@@ -67,7 +67,7 @@ function deleteProduct(product) {
     return;
   }
   store.dispatch("deleteProduct", product.id).then((res) => {
-    // TODO Show notification
+    store.commit("showToast", "Product was successfully deleted");
     store.dispatch("getProducts");
   });
 }
