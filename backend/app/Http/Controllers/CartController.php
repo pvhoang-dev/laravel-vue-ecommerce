@@ -23,6 +23,7 @@ class CartController extends Controller
         return view('cart.index', compact('cartItems', 'products', 'total'));
     }
 
+    // API
     public function add(Request $request, Product $product)
     {
         $quantity = $request->post('quantity', 1);
@@ -104,6 +105,7 @@ class CartController extends Controller
         }
     }
 
+    // API
     public function remove(Request $request, Product $product)
     {
         $user = $request->user();
@@ -131,6 +133,7 @@ class CartController extends Controller
         }
     }
 
+    // API
     public function updateQuantity(Request $request, Product $product)
     {
         $quantity = (int)$request->post('quantity');

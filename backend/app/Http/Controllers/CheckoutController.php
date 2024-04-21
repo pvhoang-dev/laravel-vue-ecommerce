@@ -206,6 +206,7 @@ class CheckoutController extends Controller
         return redirect($session->url);
     }
 
+    // API
     public function webhook()
     {
         \Stripe\Stripe::setApiKey(getenv('STRIPE_SECRET_KEY'));

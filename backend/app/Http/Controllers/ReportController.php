@@ -15,6 +15,7 @@ class ReportController extends Controller
 {
     use ReportTrait;
 
+    // API
     public function orders()
     {
         $query = Order::query();
@@ -22,6 +23,7 @@ class ReportController extends Controller
         return $this->prepareDataForBarChart($query, 'Orders By Day');
     }
 
+    // API
     public function customers()
     {
         $query = Customer::query();
