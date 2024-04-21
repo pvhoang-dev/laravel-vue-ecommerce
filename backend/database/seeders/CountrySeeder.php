@@ -23,7 +23,7 @@ class CountrySeeder extends Seeder
         $countries = [
             ['code' => 'vn', 'name' => 'Việt Nam', 'states' => json_encode($VNCitys)],
             ['code' => 'cn', 'name' => 'China', 'states' => null],
-            ['code' => 'usa', 'name' => 'United States of America', 'states' => null],
+            ['code' => 'usa', 'name' => 'USA', 'states' => null],
             ['code' => 'ger', 'name' => 'Germany', 'states' => null],
         ];
         Country::insert($countries);
