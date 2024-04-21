@@ -6,11 +6,37 @@ $categoryList = \App\Models\Category::getActiveAsTree();
 <x-app-layout>
     <x-category-list :category-list="$categoryList" class="-ml-5 -mt-5 -mr-5 px-4" />
 
-    <div class="p-3 pb-0">
-        <form action="" method="GET">
-            <x-input type="text" name="search" placeholder="Search for the products"
-                value="{{ request()->get('search') }}" />
+    <div class="flex gap-2 items-center p-3 pb-0" x-data="{
+        selectedSort: '{{ request()->get('sort', '-updated_at') }}',
+        searchKeyword: '{{ request()->get('search') }}',
+        updateUrl() {
+            const params = new URLSearchParams(window.location.search)
+            if (this.selectedSort && this.selectedSort !== '-updated_at') {
+                params.set('sort', this.selectedSort)
+            } else {
+                params.delete('sort')
+            }
+            if (this.searchKeyword) {
+                params.set('search', this.searchKeyword)
+            } else {
+                params.delete('search')
+            }
+            window.location.href = window.location.origin + window.location.pathname + '?' +
+                params.toString();
+        }
+    }">
+        <form action="" method="GET" class="flex-1" @submit.prevent="updateUrl">
+            <x-input type="text" name="search" placeholder="Search for the products" x-model="searchKeyword" />
         </form>
+        <x-input x-model="selectedSort" @change="updateUrl" type="select" name="sort"
+            class="w-full focus:border-purple-600 focus:ring-purple-600 border-gray-300 rounded">
+            <option value="price">Price (ASC)</option>
+            <option value="-price">Price (DESC)</option>
+            <option value="title">Title (ASC)</option>
+            <option value="-title">Title (DESC)</option>
+            <option value="-updated_at">Last Modified at the top</option>
+            <option value="updated_at">Last Modified at the bottom</option>
+        </x-input>
     </div>
 
     <?php if ($products->count() === 0): ?>
@@ -52,6 +78,6 @@ $categoryList = \App\Models\Category::getActiveAsTree();
             <!--/ Product Item -->
         @endforeach
     </div>
-    {{ $products->links() }}
+    {{ $products->appends(['sort' => request('sort'), 'search' => request('search')])->links() }}
     <?php endif; ?>
 </x-app-layout>
