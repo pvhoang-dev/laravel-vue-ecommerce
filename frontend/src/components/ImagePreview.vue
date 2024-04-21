@@ -48,6 +48,14 @@ function removeImage(image) {
   }
 }
 
+function revertImage(image) {
+  if (image.isProp) {
+    deletedImages.value = deletedImages.value.filter((id) => id !== image.id);
+    image.deleted = false;
+    emit("update:deletedImages", deletedImages.value);
+  }
+}
+
 watch(
   "props.images",
   () => {
@@ -80,12 +88,27 @@ onMounted(() => {
         class="max-w-full max-h-full"
         :class="image.deleted ? 'opacity-50' : ''"
       />
-      <span
+      <small
         v-if="image.deleted"
-        class="absolute left-0 bottom-0 right-0 py-1 px-2 bg-black w-100 text-white text-center flex"
+        class="absolute left-0 bottom-0 right-0 py-1 px-2 bg-black w-100 text-white justify-between items-center flex"
       >
         To be deleted
-      </span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-4 h-4 cursor-pointer"
+          @click="revertImage(image)"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+          />
+        </svg>
+      </small>
       <span
         class="absolute top-1 right-1 cursor-pointer"
         @click="removeImage(image)"
