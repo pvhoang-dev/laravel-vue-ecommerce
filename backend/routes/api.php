@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
@@ -33,6 +34,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     // Customer
     Route::apiResource('customers', CustomerController::class);
 
+    // Category
+    Route::apiResource('categories', CategoryController::class);
     // Country
     Route::get('/countries', [CustomerController::class, 'countries']);
 
