@@ -5,6 +5,11 @@ import store from "../../store/index.js";
 import Spinner from "../../components/core/Spinner.vue";
 import { useRoute, useRouter } from "vue-router";
 import ImagePreview from "../../components/ImagePreview.vue";
+// import the component
+import Treeselect from "vue3-treeselect";
+// import the styles
+import "vue3-treeselect/dist/vue3-treeselect.css";
+import axiosClient from "../../axios.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -18,8 +23,10 @@ const product = ref({
   price: null,
   quantity: null,
   published: null,
+  categories: [],
 });
 const loading = ref(false);
+const options = ref([]);
 
 const emit = defineEmits(["update:modelValue", "close"]);
 
@@ -31,6 +38,10 @@ onMounted(() => {
       product.value = response.data;
     });
   }
+
+  axiosClient.get("/categories/tree").then((result) => {
+    options.value = result.data;
+  });
 });
 
 function onSubmit($event, close = false) {
@@ -121,6 +132,11 @@ function onSubmit($event, close = false) {
             class="mb-2"
             v-model="product.published"
             label="Published"
+          />
+          <treeselect
+            v-model="product.categories"
+            :multiple="true"
+            :options="options"
           />
         </div>
         <div class="col-span-1 px-4 pt-5 pb-4">

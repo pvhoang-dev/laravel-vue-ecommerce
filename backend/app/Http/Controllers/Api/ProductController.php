@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductListResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Api\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -51,8 +52,11 @@ class ProductController extends Controller
         /** @var \Illuminate\Http\UploadedFile[] $images */
         $images = $data['images'] ?? [];
         $imagePositions = $data['image_positions'] ?? [];
+        $categories = $data['categories'] ?? [];
 
         $product = Product::create($data);
+
+        $this->saveCategories($categories, $product);
 
         $this->saveImages($images, $imagePositions, $product);
 
@@ -86,6 +90,9 @@ class ProductController extends Controller
         $images = $data['images'] ?? [];
         $deletedImages = $data['deleted_images'] ?? [];
         $imagePositions = $data['image_positions'] ?? [];
+        $categories = $data['categories'] ?? [];
+
+        $this->saveCategories($categories, $product);
 
         // Check if image was given and save on local file system
         $this->saveImages($images, $imagePositions, $product);
@@ -110,6 +117,14 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->noContent();
+    }
+
+    private function saveCategories($categoryIds, Product $product)
+    {
+        ProductCategory::where('product_id', $product->id)->delete();
+        $data = array_map(fn ($id) => (['category_id' => $id, 'product_id' => $product->id]), $categoryIds);
+
+        ProductCategory::insert($data);
     }
 
     private function saveImages($images, $positions, Product $product)
