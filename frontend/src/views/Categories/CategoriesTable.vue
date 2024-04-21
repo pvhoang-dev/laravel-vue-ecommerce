@@ -12,8 +12,8 @@ import {
 import CategoryModal from "./CategoryModal.vue";
 
 const categories = computed(() => store.state.categories);
-const sortField = ref("updated_at");
-const sortDirection = ref("desc");
+const sortField = ref("name");
+const sortDirection = ref("asc");
 const category = ref({});
 const showCategoryModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
@@ -96,7 +96,7 @@ function editCategory(p) {
             field="name"
             :sort-field="sortField"
             :sort-direction="sortDirection"
-            @click="sortCategories('email')"
+            @click="sortCategories('name')"
           >
             Name
           </TableHeaderCell>
@@ -169,7 +169,7 @@ function editCategory(p) {
             <Menu as="div" class="relative inline-block text-left">
               <div>
                 <MenuButton
-                  class="inline-flex items-center justify-center w-full rounded-full w-10 h-10 bg-black bg-opacity-0 text-sm font-medium text-white hover:bg-opacity-5 focus:bg-opacity-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  class="inline-flex items-center justify-center rounded-full w-10 h-10 bg-black bg-opacity-0 text-sm font-medium text-white hover:bg-opacity-5 focus:bg-opacity-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 >
                   <EllipsisVerticalIcon
                     class="h-5 w-5 text-indigo-500"
