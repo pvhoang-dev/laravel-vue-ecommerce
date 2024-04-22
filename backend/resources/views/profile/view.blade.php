@@ -1,5 +1,5 @@
 <x-app-layout>
-    @if ($errors->any())
+    {{-- @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -7,7 +7,7 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+    @endif --}}
     <div x-data="{
         flashMessage: '{{ \Illuminate\Support\Facades\Session::get('flash_message') }}',
         init() {
