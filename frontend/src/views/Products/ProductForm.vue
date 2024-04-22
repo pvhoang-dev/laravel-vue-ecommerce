@@ -21,7 +21,7 @@ const product = ref({
   image_positions: {},
   description: "",
   price: null,
-  quantity: null,
+  quantity: 0,
   published: false,
   categories: [],
 });

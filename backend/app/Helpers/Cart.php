@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cookie;
 
 class Cart
 {
@@ -74,6 +75,8 @@ class Cart
         if (!empty($newCartItems)) {
             CartItem::insert($newCartItems);
         }
+
+        self::clearCookieCartItems();
     }
 
     public static function getProductsAndCartItems(): array|\Illuminate\Database\Eloquent\Collection
@@ -84,5 +87,10 @@ class Cart
         $cartItems = Arr::keyBy($cartItems, 'product_id');
 
         return [$products, $cartItems];
+    }
+
+    public static function clearCookieCartItems()
+    {
+        Cookie::queue('cart_items', json_encode([]), 60 * 24 * 30);
     }
 }
