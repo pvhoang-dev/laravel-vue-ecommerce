@@ -18,7 +18,7 @@ class Order extends Model
 
     public function isPaid()
     {
-        return $this->status === OrderStatus::Paid->value;
+        return $this->status === OrderStatus::Paid->value || $this->status === OrderStatus::Completed->value;
     }
 
     public function payment(): HasOne
