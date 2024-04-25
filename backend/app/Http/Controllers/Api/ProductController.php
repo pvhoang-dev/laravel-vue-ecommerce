@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductListResource;
 use App\Http\Resources\ProductResource;
+use App\Jobs\UploadFileToCloudJob;
 use App\Models\Api\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
@@ -149,7 +150,7 @@ class ProductController extends Controller
 
             $relativePath = $path . '/' . $name;
 
-            ProductImage::create([
+            $productImage = ProductImage::create([
                 'product_id' => $product->id,
                 'path' => $relativePath,
                 'url' => URL::to(Storage::url($relativePath)),
@@ -157,6 +158,8 @@ class ProductController extends Controller
                 'size' => $image->getSize(),
                 'position' => $positions[$id] ?? $id + 1
             ]);
+
+            UploadFileToCloudJob::dispatch($productImage);
         }
     }
 
@@ -175,5 +178,7 @@ class ProductController extends Controller
 
             $image->delete();
         }
+
+        ProductImage::deleteFilesFromStorage($images);
     }
 }
