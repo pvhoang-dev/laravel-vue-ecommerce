@@ -115,6 +115,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        $imageIds = ProductImage::where('product_id', $product->id)->pluck('id')->toArray();
+
+        $this->deleteImages($imageIds, $product);
+
         $product->delete();
 
         return response()->noContent();
