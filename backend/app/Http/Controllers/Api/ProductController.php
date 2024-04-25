@@ -138,7 +138,7 @@ class ProductController extends Controller
         foreach ($images as $id => $image) {
             $path = 'images/' . Str::random();
             if (!Storage::exists($path)) {
-                Storage::makeDirectory($path, 0755, true);
+                Storage::makeDirectory($path);
             }
 
             $name = Str::random() . '.' . $image->getClientOriginalExtension();
