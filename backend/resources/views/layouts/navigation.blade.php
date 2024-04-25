@@ -4,7 +4,9 @@
 }" @cart-change.window="cartItemsCount = $event.detail.count"
     class="flex justify-between bg-slate-800 shadow-md text-white">
     <div>
-        <a href="{{ route('home') }}" class="block py-navbar-item pl-5"> Logo </a>
+        <a href="{{ route('home') }}" class="block py-navbar-item pl-5">
+            <img src="{{ asset('/assets/images/apple.ico') }}"></img>
+        </a>
     </div>
     <!-- Responsive Menu -->
     <div class="block fixed z-10 top-0 bottom-0 height h-full w-[220px] transition-all bg-slate-900 md:hidden"

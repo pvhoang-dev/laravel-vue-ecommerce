@@ -57,7 +57,7 @@ $categoryList = \App\Models\Category::getActiveAsTree();
             ]) }})"
                 class="border border-1 border-gray-200 rounded-md hover:border-purple-600 transition-colors bg-white">
                 <a href="{{ route('product.view', $product->slug) }}"
-                    class="aspect-w-3 aspect-h-2 block overflow-hidden">
+                    class="aspect-w-2 aspect-h-2 block overflow-hidden">
                     <img :src="product.image" alt=""
                         class="object-cover rounded-lg hover:scale-105 hover:rotate-1 transition-transform" />
                 </a>
