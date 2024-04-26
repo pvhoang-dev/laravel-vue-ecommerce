@@ -272,14 +272,14 @@ class CheckoutController extends Controller
         DB::commit();
 
         // TODO: Send mail
-        // try {
-        //     $adminUsers = User::where('is_admin', 1)->get();
+        try {
+            $adminUsers = User::where('is_admin', 1)->get();
 
-        //     foreach ([...$adminUsers, $order->user] as $user) {
-        //         Mail::to($user)->send(new NewOrderEmail($order, (bool)$user->is_admin));
-        //     }
-        // } catch (\Exception $e) {
-        //     Log::critical('Email sending does not work. ' . $e->getMessage());
-        // }
+            foreach ([...$adminUsers, $order->user] as $user) {
+                Mail::to($user)->send(new NewOrderEmail($order, (bool)$user->is_admin));
+            }
+        } catch (\Exception $e) {
+            Log::critical('Email sending does not work. ' . $e->getMessage());
+        }
     }
 }

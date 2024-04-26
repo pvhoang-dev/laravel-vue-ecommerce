@@ -65,8 +65,7 @@ class OrderController extends Controller
                     }
                 }
             }
-            // TODO: Send mail
-            // Mail::to($order->user)->send(new OrderUpdateEmail($order));
+            Mail::to($order->user)->send(new OrderUpdateEmail($order));
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
