@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Enums\AddressType;
 use App\Http\Requests\PasswordUpdateRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Country;
-use App\Models\Customer;
 use App\Models\CustomerAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Password;
 
 class ProfileController extends Controller
 {

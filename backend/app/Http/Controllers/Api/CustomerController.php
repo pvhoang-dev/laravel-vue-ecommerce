@@ -12,7 +12,6 @@ use App\Http\Resources\CustomerResource;
 use App\Models\Country;
 use App\Models\Customer;
 use App\Models\CustomerAddress;
-use http\Env\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -45,7 +44,7 @@ class CustomerController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Customer $customer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function show(Customer $customer)
     {
@@ -57,7 +56,7 @@ class CustomerController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Customer     $customer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function update(CustomerRequest $request, Customer $customer)
     {
@@ -102,7 +101,7 @@ class CustomerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Customer $customer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function destroy(Customer $customer)
     {

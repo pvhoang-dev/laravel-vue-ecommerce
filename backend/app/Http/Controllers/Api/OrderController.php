@@ -6,11 +6,8 @@ use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderListResource;
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\ProductListResource;
 use App\Mail\OrderUpdateEmail;
-use App\Models\Api\Product;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
@@ -19,7 +16,7 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function index()
     {
@@ -65,7 +62,6 @@ class OrderController extends Controller
                     }
                 }
             }
-            // TODO: Send mail
             // Mail::to($order->user)->send(new OrderUpdateEmail($order));
         } catch (\Exception $e) {
             DB::rollBack();

@@ -27,16 +27,16 @@
 </table>
 <table border="1">
     <tr>
-        <th>Image</th>
+        {{-- <th>Image</th> --}}
         <th>Title</th>
         <th>Price</th>
         <th>Quantity</th>
     </tr>
     @foreach ($order->items as $item)
         <tr>
-            <td>
+            {{-- <td>
                 <img src="{{ $item->product->image }}" style="width: 100px">
-            </td>
+            </td> --}}
             <td>{{ $item->product->title }}</td>
             <td>${{ $item->unit_price * $item->quantity }}</td>
             <td>{{ $item->quantity }}</td>
