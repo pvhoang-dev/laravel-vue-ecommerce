@@ -6,7 +6,6 @@ export function request(method, url, data = {}) {
       Accept: "application/json",
       "X-CSRF-TOKEN": document.head.querySelector("meta[name=csrf-token]")
         .content,
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     ...(method === "get" ? {} : { body: JSON.stringify(data) }),
   }).then(async (response) => {

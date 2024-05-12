@@ -10,8 +10,6 @@ use App\Jobs\UploadFileToCloudJob;
 use App\Models\Api\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
-use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -21,7 +19,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function index()
     {
@@ -42,7 +40,7 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function store(ProductRequest $request)
     {
@@ -68,7 +66,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function show(Product $product)
     {
@@ -80,7 +78,7 @@ class ProductController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Product      $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function update(ProductRequest $request, Product $product)
     {
@@ -111,7 +109,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\JsonResource;
      */
     public function destroy(Product $product)
     {
@@ -163,7 +161,7 @@ class ProductController extends Controller
                 'position' => $positions[$id] ?? $id + 1
             ]);
 
-            UploadFileToCloudJob::dispatch($productImage);
+            // UploadFileToCloudJob::dispatch($productImage);
         }
     }
 
@@ -183,6 +181,6 @@ class ProductController extends Controller
             $image->delete();
         }
 
-        ProductImage::deleteFilesFromStorage($images);
+        // ProductImage::deleteFilesFromStorage($images);
     }
 }
