@@ -4,8 +4,6 @@ import store from "../../store";
 import Spinner from "../../components/core/Spinner.vue";
 import { PRODUCTS_PER_PAGE } from "../../constants";
 import TableHeaderCell from "../../components/core/Table/TableHeaderCell.vue";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { Bars3Icon, PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import OrderStatus from "./OrderStatus.vue";
 
 const perPage = ref(PRODUCTS_PER_PAGE);
@@ -13,8 +11,6 @@ const search = ref("");
 const orders = computed(() => store.state.orders);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
-const order = ref({});
-const showOrderModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
 
 onMounted(() => {
@@ -51,24 +47,6 @@ function sortOrders(field) {
     sortDirection.value = "asc";
   }
   getOrders();
-}
-
-function showAddNewModal() {
-  showOrderModal.value = true;
-}
-
-function deleteOrder(order) {
-  if (!confirm(`Are you sure you want to delete the order?`)) {
-    return;
-  }
-  store.dispatch("deleteOrder", order.id).then((res) => {
-    // TODO Show notification
-    store.dispatch("getOrders");
-  });
-}
-
-function showOrder(p) {
-  emit("clickShow", p);
 }
 </script>
 
