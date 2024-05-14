@@ -16,7 +16,6 @@ const search = ref("");
 const customers = computed(() => store.state.customers);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
-const customer = ref({});
 const showCustomerModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
 
@@ -54,10 +53,6 @@ function sortCustomers(field) {
     sortDirection.value = "asc";
   }
   getCustomers();
-}
-
-function showAddNewModal() {
-  showCustomerModal.value = true;
 }
 
 function deleteCustomer(customer) {

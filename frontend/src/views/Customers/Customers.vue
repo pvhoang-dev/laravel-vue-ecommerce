@@ -1,10 +1,9 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { ref } from "vue";
 import store from "../../store";
 import CustomersTable from "./CustomersTable.vue";
 
 const DEFAULT_CUSTOMER = {};
-const customers = computed(() => store.state.customers);
 const customerModel = ref({ ...DEFAULT_CUSTOMER });
 const showCustomerModal = ref(false);
 
@@ -18,10 +17,6 @@ function editCustomer(c) {
     customerModel.value = data;
     showAddNewModal();
   });
-}
-
-function onModalClose() {
-  customerModel.value = { ...DEFAULT_CUSTOMER };
 }
 </script>
 
