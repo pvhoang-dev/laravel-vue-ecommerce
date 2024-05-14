@@ -1,6 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
-import store from "../../store";
+import { ref } from "vue";
 import UserModal from "./UserModal.vue";
 import UsersTable from "./UsersTable.vue";
 const DEFAULT_USER = {
@@ -10,7 +9,6 @@ const DEFAULT_USER = {
   image: "",
   price: "",
 };
-const users = computed(() => store.state.users);
 const userModel = ref({ ...DEFAULT_USER });
 const showUserModal = ref(false);
 function showAddNewModal() {

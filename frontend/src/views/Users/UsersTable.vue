@@ -10,13 +10,11 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline";
-import UserModal from "./UserModal.vue";
 const perPage = ref(USERS_PER_PAGE);
 const search = ref("");
 const users = computed(() => store.state.users);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
-const user = ref({});
 const showUserModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
 onMounted(() => {
@@ -50,9 +48,6 @@ function sortUsers(field) {
     sortDirection.value = "asc";
   }
   getUsers();
-}
-function showAddNewModal() {
-  showUserModal.value = true;
 }
 function deleteUser(user) {
   if (!confirm(`Are you sure you want to delete the user?`)) {
