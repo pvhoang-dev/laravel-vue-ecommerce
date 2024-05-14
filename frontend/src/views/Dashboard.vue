@@ -27,65 +27,6 @@ const ordersByCountry = ref([]);
 const latestCustomers = ref([]);
 const latestOrders = ref([]);
 
-// const requests = [
-//   axiosClient.get(`/dashboard/customers-count`),
-//   axiosClient.get(`/dashboard/products-count`),
-//   axiosClient.get(`/dashboard/orders-count`),
-//   axiosClient.get(`/dashboard/income-amount`),
-//   axiosClient.get(`/dashboard/orders-by-country`),
-//   axiosClient.get(`/dashboard/latest-customers`),
-//   axiosClient.get(`/dashboard/latest-orders`),
-// ];
-
-// Promise.all(requests)
-//   .then((responses) => {
-//     responses.forEach((response) => {
-//       const { data } = response;
-//       if (response.config.url === "/dashboard/customers-count") {
-//         customersCount.value = data;
-//         loading.value.customersCount = false;
-//       } else if (response.config.url === "/dashboard/products-count") {
-//         productsCount.value = data;
-//         loading.value.productsCount = false;
-//       } else if (response.config.url === "/dashboard/orders-count") {
-//         paidOrders.value = data;
-//         loading.value.paidOrders = false;
-//       } else if (response.config.url === "/dashboard/income-amount") {
-//         totalIncome.value = new Intl.NumberFormat("en-US", {
-//           style: "currency",
-//           currency: "USD",
-//         }).format(data);
-//         loading.value.totalIncome = false;
-//       } else if (response.config.url === "/dashboard/orders-by-country") {
-//         // TODO: chart
-//         const chartData = {
-//           labels: [],
-//           datasets: [
-//             {
-//               backgroundColor: ["#41B883", "#E46651", "#00D8FF", "#DD1B16"],
-//               data: [],
-//             },
-//           ],
-//         };
-//         data.forEach((c) => {
-//           chartData.labels.push(c.name);
-//           chartData.datasets[0].data.push(c.count);
-//         });
-//         ordersByCountry.value = chartData;
-//         loading.value.ordersByCountry = false;
-//       } else if (response.config.url === "/dashboard/latest-customers") {
-//         latestCustomers.value = data;
-//         loading.value.latestCustomers = false;
-//       } else if (response.config.url === "/dashboard/latest-orders") {
-//         latestOrders.value = data.data;
-//         loading.value.latestOrders = false;
-//       }
-//     });
-//   })
-//   .catch((error) => {
-//     console.error("Error fetching data:", error);
-//   });
-
 function updateDashboard() {
   const d = chosenDate.value;
   loading.value = {
@@ -189,8 +130,8 @@ onMounted(() => updateDashboard());
       </template>
       <Spinner v-else text="" class="" />
     </div>
-    <!--/    Active Customers-->
-    <!--    Active Products -->
+    <!--/ Active Customers-->
+    <!-- Active Products -->
     <div
       class="animate-fade-in-down bg-white py-6 px-5 rounded-lg shadow flex flex-col items-center justify-center"
       style="animation-delay: 0.1s"
