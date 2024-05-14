@@ -15,7 +15,6 @@ const search = ref("");
 const users = computed(() => store.state.users);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
-const showUserModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
 onMounted(() => {
   getUsers();
