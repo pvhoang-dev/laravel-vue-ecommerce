@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import store from "../../store";
 import CategoryModal from "./CategoryModal.vue";
 import CategoriesTable from "./CategoriesTable.vue";
@@ -11,7 +11,6 @@ const DEFAULT_CATEGORY = {
   image: "",
   price: "",
 };
-const categories = computed(() => store.state.categories);
 const categoryModel = ref({ ...DEFAULT_CATEGORY });
 const showCategoryModal = ref(false);
 

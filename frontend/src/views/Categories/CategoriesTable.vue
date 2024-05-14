@@ -9,12 +9,10 @@ import {
   PencilIcon,
   TrashIcon,
 } from "@heroicons/vue/24/outline";
-import CategoryModal from "./CategoryModal.vue";
 
 const categories = computed(() => store.state.categories);
 const sortField = ref("name");
 const sortDirection = ref("asc");
-const category = ref({});
 const showCategoryModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
 
@@ -52,10 +50,6 @@ function sortCategories(field) {
   }
 
   getCategories();
-}
-
-function showAddNewModal() {
-  showCategoryModal.value = true;
 }
 
 function deleteCategory(category) {
