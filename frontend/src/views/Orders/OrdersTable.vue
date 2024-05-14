@@ -11,7 +11,6 @@ const search = ref("");
 const orders = computed(() => store.state.orders);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
-const emit = defineEmits(["clickEdit"]);
 
 onMounted(() => {
   getOrders();
