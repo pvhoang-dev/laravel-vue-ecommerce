@@ -16,8 +16,6 @@ const search = ref("");
 const customers = computed(() => store.state.customers);
 const sortField = ref("updated_at");
 const sortDirection = ref("desc");
-const showCustomerModal = ref(false);
-const emit = defineEmits(["clickEdit"]);
 
 onMounted(() => {
   getCustomers();
@@ -76,6 +74,7 @@ function deleteCustomer(customer) {
           v-model="perPage"
           class="appearance-none relative block w-24 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
         >
+          <option value="1">1</option>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="20">20</option>
@@ -259,7 +258,6 @@ function deleteCustomer(customer) {
         class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px"
         aria-label="Pagination"
       >
-        <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
         <a
           v-for="(link, i) of customers.links"
           :key="i"
