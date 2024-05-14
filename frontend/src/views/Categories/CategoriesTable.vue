@@ -13,21 +13,11 @@ import {
 const categories = computed(() => store.state.categories);
 const sortField = ref("name");
 const sortDirection = ref("asc");
-const showCategoryModal = ref(false);
 const emit = defineEmits(["clickEdit"]);
 
 onMounted(() => {
   getCategories();
 });
-
-function getForPage(ev, link) {
-  ev.preventDefault();
-  if (!link.url || link.active) {
-    return;
-  }
-
-  getCategories(link.url);
-}
 
 function getCategories(url = null) {
   store.dispatch("getCategories", {

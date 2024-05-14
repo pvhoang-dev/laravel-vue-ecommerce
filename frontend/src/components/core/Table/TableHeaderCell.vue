@@ -17,7 +17,6 @@ const emit = defineEmits(["click"]);
     <div class="flex justify-between">
       <slot></slot>
       <div v-if="sortField === field" class="ml-2">
-        <!--              Sort Asc-->
         <svg
           v-if="sortDirection === 'asc'"
           xmlns="http://www.w3.org/2000/svg"
