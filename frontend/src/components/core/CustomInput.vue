@@ -161,10 +161,10 @@ function onChange(value) {
 </template>
 
 <style scoped>
-/deep/ .ck-editor {
+:deep(.ck-editor) {
   width: 100%;
 }
-/deep/ .ck-content {
+:deep(.ck-content) {
   min-height: 200px;
 }
 </style>
